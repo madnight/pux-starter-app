@@ -31,7 +31,8 @@ module.exports = {
   },
   module: {
     loaders: [
-      {
+    { test: /\.json$/, loader: 'json-loader' },
+    {
         test: /\.purs$/,
         loader: 'purs-loader',
         exclude: /node_modules/,
@@ -61,20 +62,26 @@ module.exports = {
       'node_modules',
       'bower_components'
     ],
-    extensions: ['.js', '.purs']
+    extensions: ['.js', '.json', '.purs']
   },
   performance: { hints: false },
   stats: {
-    hash: false,
-    timings: false,
-    version: false,
-    assets: false,
-    errors: true,
-    colors: false,
-    chunks: false,
-    children: false,
-    cached: false,
-    modules: false,
+    hash:         false ,
+    timings:      false ,
+    version:      false ,
+    assets:       false ,
+    errors:       true  ,
+    colors:       false ,
+    chunks:       false ,
+    children:     false ,
+    cached:       false ,
+    modules:      false ,
     chunkModules: false
-  }
+  },
+  node: {
+        console: 'mock',
+        fs: 'empty',
+        net: 'empty',
+        tls: 'empty'
+    }
 }

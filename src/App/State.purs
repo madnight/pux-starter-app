@@ -7,6 +7,7 @@ import Data.Newtype (class Newtype)
 newtype State = State
   { title :: String
   , route :: Route
+  , count :: Int
   , loaded :: Boolean
   }
 
@@ -17,4 +18,5 @@ init url = State
   { title: config.title
   , route: match url
   , loaded: false
+  , count: 0
   }

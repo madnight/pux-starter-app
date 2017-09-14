@@ -6,6 +6,7 @@ import App.Routes (match)
 import App.State (State, init)
 import App.View.Layout (view)
 import Control.Monad.Eff (Eff)
+import Control.Monad.Aff.Console (CONSOLE)
 import DOM (DOM)
 import DOM.HTML (window)
 import DOM.HTML.Types (HISTORY)
@@ -17,7 +18,7 @@ import Signal ((~>))
 
 type WebApp = App (DOMEvent -> Event) Event State
 
-type ClientEffects = CoreEffects (AppEffects (history :: HISTORY, dom :: DOM))
+type ClientEffects = CoreEffects (AppEffects (history :: HISTORY, dom :: DOM, console :: CONSOLE, ajax :: AJAX))
 
 main :: String -> State -> Eff ClientEffects WebApp
 main url state = do
