@@ -17,12 +17,7 @@ import Control.Promise (Promise, toAff)
 
 foreign import data Response :: Type
 foreign import data NET :: Effect
-
 foreign import pow :: Number -> Number -> Number
-foreign import fetchImpl :: forall e. String -> Eff e (Promise String)
-
-fetch :: forall eff. String -> Aff (net :: NET | eff) String
-fetch url = liftEff (fetchImpl url) >>= toAff
 
 view :: State -> HTML Event
 view (State st) =

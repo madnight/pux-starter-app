@@ -15,6 +15,7 @@ import Pux.DOM.Events (DOMEvent)
 import Pux.DOM.History (sampleURL)
 import Pux.Renderer.React (renderToDOM)
 import Signal ((~>))
+import Network.HTTP.Affjax (AJAX)
 
 type WebApp = App (DOMEvent -> Event) Event State
 
