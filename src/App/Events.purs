@@ -1,7 +1,7 @@
 module App.Events where
 
 import App.Routes (Route)
-import App.State (State(..))
+import App.State (State(..), Projects)
 import Data.Function (($))
 import Network.HTTP.Affjax (AJAX)
 import Pux (EffModel, noEffects)
@@ -26,13 +26,14 @@ type AppEffects fx = ( history :: HISTORY
                      , ajax :: AJAX
                      | fx)
 
-data Event = PageView Route | Increment | Decrement
+
+data Event = PageView Route | Increment | Decrement | ReceiveTodos Projects
 
 type ConsoleEffects fx = (console :: CONSOLE | fx)
 
-foreign import trends :: forall e. Eff e (Promise String)
+foreign import trends :: forall e. Eff e (Promise Projects)
 
-fetch :: forall eff. Aff (net :: NET | eff) String
+fetch :: forall eff. Aff (net :: NET | eff) Projects
 fetch = liftEff trends >>= toAff
 
 
@@ -41,7 +42,7 @@ foldp (PageView route) (State st) =
   noEffects $ State st { route = route, loaded = true }
 foldp Increment (State st) = consolePrint $ State st { count = st.count + 1 }
 foldp Decrement (State st) = fetchPrint $ State st { count = st.count - 1 }
-
+foldp (ReceiveTodos p) (State st) = noEffects $ State st { projects = p }
 
 consolePrint :: ∀ fx. State -> EffModel State Event (AppEffects fx)
 consolePrint state = { state: state
@@ -51,7 +52,6 @@ fetchPrint :: ∀ fx. State -> EffModel State Event (AppEffects fx)
 fetchPrint state = { state: state
                    , effects: [ do
                             result <- fetch
-                            log result
-                            pure Nothing
+                            pure $ Just $ ReceiveTodos result
                         ]
                    }
