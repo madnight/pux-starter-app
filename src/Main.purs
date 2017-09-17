@@ -14,7 +14,7 @@ import Pux (CoreEffects, App, start)
 import Pux.DOM.Events (DOMEvent)
 import Pux.DOM.History (sampleURL)
 import Pux.Renderer.React (renderToDOM)
-import Signal ((~>))
+import Signal ((~>), constant)
 import Network.HTTP.Affjax (AJAX)
 
 type WebApp = App (DOMEvent -> Event) Event State
@@ -34,7 +34,7 @@ main url state = do
     { initialState: state
     , view
     , foldp
-    , inputs: [routeSignal] }
+    , inputs: [constant Decrement, routeSignal] }
 
   -- | Render to the DOM
   renderToDOM "#app" app.markup app.input
