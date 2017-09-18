@@ -1,15 +1,14 @@
 module App.View.Layout where
 
-import App.View.Homepage as Homepage
-import App.View.NotFound as NotFound
+import App.Events (Event)
 import App.Routes (Route(NotFound, Home))
 import App.State (State(..))
-import App.Events (Event)
-import CSS (CSS, fromString, (?), fontSize, display, inlineBlock, marginTop, marginRight, marginLeft, px, value, key, color, backgroundColor, padding, borderRadius)
-import CSS.Border (border, solid)
-import CSS.TextAlign (center, textAlign)
+import App.View.Home as Homepage
+import App.View.NotFound as NotFound
+import CSS (CSS, fromString, (?), fontSize, display, inlineBlock, marginTop, px, value, key, padding, borderRadius)
 import CSS.Text (textDecoration, noneTextDecoration, letterSpacing)
 import CSS.Text.Transform (textTransform, uppercase)
+import CSS.TextAlign (center, textAlign)
 import Color (rgb)
 import Control.Bind (discard)
 import Data.Function (($), (#))
@@ -34,9 +33,7 @@ css = do
       white = rgb 250 250 250
 
   fromString "body" ? do
-    backgroundColor (rgb 0 20 30)
     key (fromString "font-family") (value "-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Oxygen-Sans,Ubuntu,Cantarell,\"Helvetica Neue\",sans-serif")
-    color white
     textAlign center
 
   fromString "h1" ? do
@@ -50,21 +47,3 @@ css = do
     borderRadius (2.0 #px) (2.0 #px) (2.0 #px) (2.0 #px)
     padding (6.0 #px) (6.0 #px) (6.0 #px) (6.0 #px)
     textDecoration noneTextDecoration
-
-  fromString ".guide" ? do
-    border solid (2.0 #px) green
-    color green
-    marginRight (10.0 #px)
-
-  fromString ".guide:hover" ? do
-    backgroundColor green
-    color white
-
-  fromString ".github" ? do
-    border solid (2.0 #px) blue
-    color blue
-    marginLeft (10.0 #px)
-
-  fromString ".github:hover" ? do
-    backgroundColor blue
-    color white

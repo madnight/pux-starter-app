@@ -1,4 +1,3 @@
-const appConfig = require('./src/App/Config.js').config
 const path = require('path')
 const webpack = require('webpack')
 const isProd = process.env.NODE_ENV === 'production'
@@ -27,7 +26,9 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'static', 'dist'),
     filename: 'bundle.js',
-    publicPath: appConfig.public_path
+    publicPath: process.env.NODE_ENV === 'production'
+               ? '/dist/'
+               : 'http://localhost:8080/dist/'
   },
   module: {
     loaders: [
